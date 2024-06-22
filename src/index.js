@@ -14,14 +14,14 @@ const app = express();
 const server = require('http').createServer(app);
 // app.use(cors());
 
-app.use(
-    cors({
-        origin: ['http://localhost:3000', 'http://localhost:3001'], // Replace with your React app's URL
-        methods: ['GET', 'POST'],
-        credentials: true,
-    })
-);
-
+// app.use(
+//     cors({
+//         origin: ['http://localhost:3000', 'http://localhost:3001'], // Replace with your React app's URL
+//         methods: ['GET', 'POST'],
+//         credentials: true,
+//     })
+// );
+app.use(cors());
 ////////////////
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
