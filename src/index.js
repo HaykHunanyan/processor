@@ -2,10 +2,9 @@ const express = require('express');
 const config = require('config');
 const cors = require('cors');
 const path = require('path');
+// const { run } = require('./mongoDBConnection');
 
-const { run } = require('./mongoDBConnection');
 const bodyParser = require('body-parser');
-
 const app = express();
 const server = require('http').createServer(app);
 app.use(cors());
@@ -32,7 +31,7 @@ app.use('/',(req,res)=> res.send({ success: false, message: 'Server Error!' }))
 
 async function start() {
     try {
-        await run().catch(console.dir);
+        // await run().catch(console.dir);
         server.listen(PORT, () =>
             console.log(`Server listening on localhost:${PORT}`)
         );
