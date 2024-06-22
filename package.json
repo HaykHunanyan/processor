@@ -7,10 +7,7 @@
     "dev": "nodemon src/",
     "start": "node src/"
   },
-  "engines": {
-    "node": "18.x",
-    "npm": "10.x"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
