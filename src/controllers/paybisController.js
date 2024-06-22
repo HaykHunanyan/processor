@@ -2,7 +2,7 @@ const { Users: UserModel } = require('../models');
 // const puppeteer = require('puppeteer');
 const path = require('path');
 
-const chrome = require('chrome-aws-lambda');
+// const chrome = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
 
 let browser; // Global browser instance
@@ -13,22 +13,22 @@ module.exports = {
     LUNCH: async (req, res) => {
         try {
             //{ headless: false }
-            console.log('Launching browser...');
-            browser = await puppeteer.launch({
-                args: [...chrome.args, '--no-sandbox', '--disable-setuid-sandbox'],
-                executablePath: await chrome.executablePath,
-                headless: 'new',//chrome.headless,
-                defaultViewport: chrome.defaultViewport,
-                protocolTimeout: 60000
-            });
-            console.log('Browser launched successfully.');
-            return res.send({ success: true, message: 'OK' });
+            // console.log('Launching browser...');
             // browser = await puppeteer.launch({
-            //     headless: 'new', // Opt-in to the new headless mode
-            //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            //     protocolTimeout: 60000,
+            //     args: [...chrome.args, '--no-sandbox', '--disable-setuid-sandbox'],
+            //     executablePath: await chrome.executablePath,
+            //     headless: 'new',//chrome.headless,
+            //     defaultViewport: chrome.defaultViewport,
+            //     protocolTimeout: 60000
             // });
+            // console.log('Browser launched successfully.');
             // return res.send({ success: true, message: 'OK' });
+            browser = await puppeteer.launch({
+                headless: 'new', // Opt-in to the new headless mode
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                protocolTimeout: 60000,
+            });
+            return res.send({ success: true, message: 'OK' });
         } catch (error) {
             if (browser) {
                await browser.close();
@@ -53,6 +53,7 @@ module.exports = {
                 url,
                 { waitUntil: 'networkidle0' }
             );
+            await page.setViewport({width: 566, height: 691});
             await page.waitForTimeout(5000);
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
