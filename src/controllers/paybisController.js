@@ -2,7 +2,6 @@ const { Users: UserModel } = require('../models');
 // const puppeteer = require('puppeteer');
 const path = require('path');
 
-
 const chrome = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
 
