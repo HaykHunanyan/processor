@@ -23,7 +23,9 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 
 const PORT = process.env.PORT || config.get('port');
-
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use('/paybis', require('./api/paybis.js'));
 app.use('/',(req,res)=> res.send({ success: false, message: 'Server Error!' }))
