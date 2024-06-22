@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 
 const PORT = process?.env?.PORT || config.get('port');
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
