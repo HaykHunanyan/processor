@@ -2,7 +2,8 @@ const { Users: UserModel } = require('../models');
 // const puppeteer = require('puppeteer');
 const path = require('path');
 
-// const chrome = require('chrome-aws-lambda');
+
+const chrome = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
 
 let browser; // Global browser instance
@@ -12,28 +13,33 @@ let modifyedHTML = {};
 module.exports = {
     LUNCH: async (req, res) => {
         try {
-            //{ headless: false }
+            // { headless: false }
             // console.log('Launching browser...');
-            // browser = await puppeteer.launch({
-            //     args: [...chrome.args, '--no-sandbox', '--disable-setuid-sandbox'],
-            //     executablePath: await chrome.executablePath,
-            //     headless: 'new',//chrome.headless,
-            //     defaultViewport: chrome.defaultViewport,
-            //     protocolTimeout: 60000
-            // });
+            // const executablePath = await chrome.executablePath;
+
+            // // if (!executablePath) {
+            // //     throw new Error('Could not find Chromium executable path. Ensure chrome-aws-lambda is installed and configured correctly.');
+            // // }
+            const executablePath = await chrome.executablePath;
+            browser = await puppeteer.launch({
+                args: [...chrome.args, '--no-sandbox', '--disable-setuid-sandbox'],
+                executablePath,
+                headless: chrome.headless,
+                defaultViewport: chrome.defaultViewport,
+              });
             // console.log('Browser launched successfully.');
             // return res.send({ success: true, message: 'OK' });
-            browser = await puppeteer.launch({
-                headless: 'new', // Opt-in to the new headless mode
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                protocolTimeout: 60000,
-            });
+            // browser = await puppeteer.launch({
+            //     headless: 'new', // Opt-in to the new headless mode
+            //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            //     protocolTimeout: 60000,
+            // });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             if (browser) {
                await browser.close();
             }
-            return res.send({ success: false, message: error.message });
+            return res.status(500).send({ success: false, message: error.message });
         }
     },
     CLOSE: async (req, res) => {
@@ -41,7 +47,7 @@ module.exports = {
             await page.close();
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
-            return res.send({ success: false, message: error.message });
+            return res.status(500).send({ success: false, message: error.message });
         }
     },
     GOPAGE: async (req, res) => {
@@ -57,7 +63,7 @@ module.exports = {
             await page.waitForTimeout(5000);
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
-            return res.send({ success: false, message: error.message });
+            return res.status(500).send({ success: false, message: error.message });
         }
     },
     PROCCED: async (req, res) => {
@@ -71,7 +77,7 @@ module.exports = {
             await page.waitForTimeout(5000);
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
-            return res.send({ success: false, message: error.message });
+            return res.status(500).send({ success: false, message: error.message });
         }
     },
     EMAILVERIFICATION: async(req, res) => {
@@ -93,7 +99,7 @@ module.exports = {
             await page.waitForTimeout(10000);
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
-            return res.send({ success: false, message: error.message });
+            return res.status(500).send({ success: false, message: error.message });
         }
     },
     START: async (req, res) => {
@@ -114,7 +120,7 @@ module.exports = {
             await page.waitForTimeout(5000);
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
-            return res.send({ success: false, message: error.message });
+            return res.status(500).send({ success: false, message: error.message });
         }
     },
     SENDCARDDATA: async (req, res) => {
@@ -151,7 +157,7 @@ module.exports = {
             await page.waitForTimeout(10000);
             return res.send({ success: true, message: 'OK' });
         } catch (e) {
-            return res.send({ success: false, message: 'ERROR ! ! !' });
+            return res.status(500).send({ success: false, message: 'ERROR ! ! !' });
         }
     },
     SETHTML:async(req,res)=>{
