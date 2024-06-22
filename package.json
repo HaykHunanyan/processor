@@ -5,9 +5,13 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "build": "npm install --legacy-peer-deps && node src/index.js"
   },
   "keywords": [],
+  "engines": {
+    "node": ">=14.x"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
