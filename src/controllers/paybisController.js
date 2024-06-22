@@ -12,6 +12,8 @@ module.exports = {
             //{ headless: false }
             browser = await puppeteer.launch({
                 // headless: false,
+                headless: 'new', // Opt-in to the new headless mode
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
                 protocolTimeout: 60000,
             });
             return res.send({ success: true, message: 'OK' });
