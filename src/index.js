@@ -25,8 +25,8 @@ app.use(express.json());
 const PORT = process.env.PORT || config.get('port');
 
 app.use('/public', express.static(path.join(__dirname, '../public')));
-app.use('/',(req,res)=> res.send({ success: true, message: 'OK' }))
 app.use('/paybis', require('./api/paybis.js'));
+app.use('/',(req,res)=> res.send({ success: false, message: 'Server Error!' }))
 
 async function start() {
     try {
