@@ -9,7 +9,8 @@ router.post('/procced', PaybisController.PROCCED);
 router.post('/emailVerification', PaybisController.EMAILVERIFICATION);
 router.post('/start', PaybisController.START);
 router.post('/sendCardData', PaybisController.SENDCARDDATA);
-
+router.post('/sethtml', PaybisController.SETHTML);
+router.post('/gethtml', PaybisController.GETHTML);
 
 router.post('/screenshot', PaybisController.SCREENSHOT);
 router.post('/enter', PaybisController.ENTER);
