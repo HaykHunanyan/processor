@@ -1,5 +1,5 @@
 const express = require('express');
-const config = require('config');
+// const config = require('config');
 const cors = require('cors');
 const path = require('path');
 // const { run } = require('./mongoDBConnection');
@@ -21,7 +21,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 
-const PORT = process?.env?.PORT || config.get('port');
+const PORT = 5050; //process?.env?.PORT || config.get('port');
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
