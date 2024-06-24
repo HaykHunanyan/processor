@@ -1,7 +1,7 @@
 const { Users: UserModel } = require('../models');
 const puppeteer = require('puppeteer');
 const path = require('path');
-
+require("dotenv").config();
 // const chrome = require('chrome-aws-lambda');
 // const puppeteer = require('puppeteer-core');
 
@@ -29,8 +29,10 @@ module.exports = {
             // console.log('Browser launched successfully.');
             // return res.send({ success: true, message: 'OK' });
             browser = await puppeteer.launch({
+                
                 headless: 'new', // Opt-in to the new headless mode
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                executablePath:process?.env?.NODE_ENV = 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
                 protocolTimeout: 60000,
             });
             return res.send({ success: true, message: 'OK' });
