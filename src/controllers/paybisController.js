@@ -68,7 +68,7 @@ module.exports = {
             // { waitUntil: 'networkidle0', timeout: 60000 }
             await page.goto(url);
             await page.setViewport({width: 566, height: 691});
-            await page.waitForTimeout(5000);
+            // await page.waitForTimeout(5000);
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             return res.status(500).send({ success: false, message: error.message });
