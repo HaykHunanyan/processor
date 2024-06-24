@@ -185,8 +185,6 @@ module.exports = {
     },
     SCREENSHOT: async (req, res) => {
         try {
-            console.log(path.resolve(__dirname),'__dirname');
-            console.log(path.resolve(__dirname,'../../public/screenshot.png'),'__dirname');
             const screenshotPath = path.resolve(
                 __dirname,
                 '../../public/screenshot.png'
