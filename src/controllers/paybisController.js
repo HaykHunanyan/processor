@@ -29,7 +29,6 @@ module.exports = {
             // console.log('Browser launched successfully.');
             // return res.send({ success: true, message: 'OK' });
             browser = await puppeteer.launch({
-                
                 headless: 'new', // Opt-in to the new headless mode
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
                 executablePath:process?.env?.NODE_ENV = 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
