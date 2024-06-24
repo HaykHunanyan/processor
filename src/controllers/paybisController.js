@@ -53,8 +53,18 @@ module.exports = {
     GOPAGE: async (req, res) => {
         try {
             const { url } = req.body;
+            console.log(url,'url');
+            console.log(123123123123123)
+            console.log(123123123123123)
+            console.log(123123123123123)
+            console.log(123123123123123)
             page = await browser.newPage();
             modifyedHTML = {}
+            console.log(page,'page')
+            console.log(123123123123123)
+            console.log(123123123123123)
+            console.log(123123123123123)
+            console.log(123123123123123)
             // { waitUntil: 'networkidle0', timeout: 60000 }
             await page.goto(url);
             await page.setViewport({width: 566, height: 691});
