@@ -55,10 +55,8 @@ module.exports = {
             const { url } = req.body;
             page = await browser.newPage();
             modifyedHTML = {}
-            await page.goto(
-                url,
-                { waitUntil: 'networkidle0', timeout: 60000 }
-            );
+            // { waitUntil: 'networkidle0', timeout: 60000 }
+            await page.goto(url);
             await page.setViewport({width: 566, height: 691});
             await page.waitForTimeout(5000);
             return res.send({ success: true, message: 'OK' });
