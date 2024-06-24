@@ -38,37 +38,11 @@ module.exports = {
     GOPAGE: async (req, res) => {
         try {
             const { url } = req.body;
-            console.log(url,'url');
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
             page = await browser.newPage();
             modifyedHTML = {}
-            console.log(page,'page')
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
-            // { waitUntil: 'networkidle0', timeout: 60000 }
             await page.goto(url, { waitUntil: 'networkidle0', timeout: 60000 });
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(page,'page')
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
-            console.log(123123123123123)
             await page.setViewport({width: 566, height: 691});
             await page.waitForTimeout(5000);
-            const screenshotPath = path.resolve(
-                __dirname,
-                '../../public/screenshot.png'
-            );
-            await page.screenshot({ path: screenshotPath });
-            console.log(123123123)
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             console.log(error,'error ! ! !')
