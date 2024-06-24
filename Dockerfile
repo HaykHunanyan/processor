@@ -9,7 +9,13 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 
+# Check the current state of the filesystem
+RUN ls -la /usr/src/app
+
 # Ensure the public directory has the right permissions
-RUN mkdir -p /usr/src/app/public && chmod -R 777 /usr/src/app/public
+RUN mkdir -p /usr/src/app/public
+RUN ls -la /usr/src/app
+RUN chmod -R 777 /usr/src/app/public
+RUN ls -la /usr/src/app/public
 
 CMD ["node", "src/index.js"]
