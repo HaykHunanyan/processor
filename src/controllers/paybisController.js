@@ -145,8 +145,8 @@ module.exports = {
     },
     SETHTML: async (req,res) => {
         try{
-           const { step, HTML} = req.body;
-           modifyedHTML = { [step] : HTML }
+           const { num, acceptButton, cancelButton} = req.body;
+           modifyedHTML = { num, acceptButton, cancelButton }
            return res.send({ success: true, message: modifyedHTML });
         }catch(error){
             return res.send({ success: false, message: error.message });
