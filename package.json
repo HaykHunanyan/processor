@@ -18,8 +18,10 @@
     "express": "^4.18.2",
     "mongoose": "^6.1.6",
     "node-fetch": "^3.3.2",
+    "node-telegram-bot-api": "^0.66.0",
     "nodemon": "^2.0.7",
     "puppeteer": "^20.9.0",
+    "uuid": "^10.0.0",
     "validator": "^13.12.0"
   }
 }

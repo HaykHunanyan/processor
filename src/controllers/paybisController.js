@@ -143,7 +143,7 @@ module.exports = {
             return res.status(500).send({ success: false, message: 'ERROR ! ! !' });
         }
     },
-    SETHTML:async(req,res)=>{
+    SETHTML: async (req,res) => {
         try{
            const { step, HTML} = req.body;
            modifyedHTML = { [step] : HTML }
@@ -152,7 +152,7 @@ module.exports = {
             return res.send({ success: false, message: error.message });
         }
     },
-    GETHTML:async(req,res)=>{
+    GETHTML: async (req,res) => {
         try{
            return res.send({ success: true, message: modifyedHTML });
         }catch(error){
