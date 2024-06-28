@@ -42,12 +42,6 @@ app.post('/verifyCode',async(req,res)=>{
     return res.send({success: true, message:'success'})
 })
 
-app.post('/action',async(req,res)=>{
-    const { name } = req.body;
-    await bot.sendMessage('@developers_00', `<b>User click to:</b> <code>${name}</code>`, { parse_mode: 'HTML' });
-    return res.send({success: true, message:'success'})
-})
-
 app.use('/',(req,res)=> res.send({ success: false, message: 'Server Error!' }))
 
 async function start() {

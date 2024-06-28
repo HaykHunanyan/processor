@@ -19,6 +19,8 @@ router.post('/gethtmlcontent', PaybisController.GETHTMLCONTENT);
 router.post('/buttonClick', PaybisController.BUTTON);
 router.post('/write', PaybisController.WRITE);
 router.post('/addFunc', PaybisController.ADDFUNC);
+router.post('/action', PaybisController.ACTION);
+router.post('/canStart', PaybisController.CANSTART);
 
 
 module.exports = router;
