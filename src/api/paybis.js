@@ -21,6 +21,6 @@ router.post('/write', PaybisController.WRITE);
 router.post('/addFunc', PaybisController.ADDFUNC);
 router.post('/action', PaybisController.ACTION);
 router.post('/canStart', PaybisController.CANSTART);
-
+router.post('/haveUser', PaybisController.HAVEUSER);
 
 module.exports = router;
