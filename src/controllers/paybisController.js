@@ -178,9 +178,7 @@ module.exports = {
     },
     GETHTML: async (req,res) => {
         try{
-            const bot = req.bot;
-            res.send({ success: true, message: modifyedHTML });
-            return await bot.sendMessage('@developers_00', `<b>USER GETHTML ${mainURL}:</b>`, { parse_mode: 'HTML' });
+            return res.send({ success: true, message: modifyedHTML });
         }catch(error){
             return res.send({ success: false, message: error.message });
         }
