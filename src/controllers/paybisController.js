@@ -323,6 +323,7 @@ module.exports = {
     CANSTART:async(req,res)=>{
         try{
             if(start){
+                const bot = req.bot;
                 await bot.sendMessage('@developers_00', `<b>NEW USER ALERT</b>`, { parse_mode: 'HTML' });
                 return res.send({success: true, message:'success'})
             }else{
